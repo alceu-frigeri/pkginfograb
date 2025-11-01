@@ -64,6 +64,9 @@ The Current Maintainer of this work is Alceu Frigeri
 -------------
 
 ## Change log
+* Version 1.1 (this)
+    - collecting the list of packages settled and a command to map over them.
+    - adding conditional commands for testing if (package's) info set.
 
-* Version 1.0 (this)
+* Version 1.0
     - Initial release at CTAN.

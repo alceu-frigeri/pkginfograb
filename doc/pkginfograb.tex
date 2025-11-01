@@ -20,7 +20,7 @@
 %%
 %% The Current Maintainer of this work is Alceu Frigeri
 %%
-%% This is version {1.0} {2025/10/21}
+%% This is version {1.1} {2025/11/01}
 %%
 %% The list of files that compose this work can be found in the README.md file at
 %% https://ctan.org/pkg/pkginfograb
@@ -89,8 +89,8 @@ This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/10/21},
-    version      = {1.0} ,
+    date         = {2025/11/01},
+    version      = {1.1} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 \end{codestore}
@@ -161,6 +161,34 @@ For example:
 \tsdemo[pkginfograb]{demoD}
 
 
+\begin{codedescribe}[code,EXP,new=2025/11/01]{\pkginfograb_if_set_p:n,\pkginfograb_if_set:nTF}
+\begin{codesyntax}%
+\tsmacro{\pkginfograb_if_set_p:n}{pack-name}
+\tsmacro{\pkginfograb_if_set:nTF}{pack-name,if-true,if-false}
+\end{codesyntax}
+This will test if the given \tsobj[marg]{pack-name} was set with \tsobj{\pkginfograb_set:nn} and \tsobj[marg,sep=or]{if-true,if-false} will be properly executed.
+\end{codedescribe}
+
+
+\begin{codedescribe}[code,new=2025/11/01]{\pkginfograb_map_inline:n}
+\begin{codesyntax}%
+\tsmacro{\pkginfograb_map_inline:n}{inline-code}
+\end{codesyntax}
+\tsobj[marg]{inline-code} will receive (as \tsobj[arg]{\#1}) the name of each package set with \tsobj{\pkginfograb_set:nn} in the order they were set.
+\end{codedescribe}
+
+
+\begin{codestore}[demoD]
+\ExplSyntaxOn
+\pkginfograb_map_inline:n
+  {
+   \pkginfograb_description:n{#1}
+  }
+\ExplSyntaxOff
+\end{codestore}
+
+\tsdemo[pkginfograb]{demoD}[2]
+
 
 \section{LaTeX2e Commands' Aliases}\label{2e-cmds}
 All commands below are aliases to their \tsobj[pkg]{expl3} counterparts. Aside from \tsobj{\PkgInfoSetAliases} all other \LaTeX2e\ aliases aren't defined by default. Call either \tsobj[code,sep=or]{\pkginfograb_set_aliases:,\PkgInfoSetAliases} before using them.
@@ -180,8 +208,8 @@ For Example:
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/10/21},
-    version      = {1.0} ,
+    date         = {2025/11/01},
+    version      = {1.1} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 \end{codestore}
@@ -243,6 +271,34 @@ For example:
 \end{codestore}
 
 \tsdemo[pkginfograb]{demoC}
+
+
+
+\begin{codedescribe}[code,new=2025/11/01]{\PkgInfoIfSet}
+\begin{codesyntax}%
+\tsmacro{\PkgInfoIfSet}{pack-name,if-true,if-false}
+\end{codesyntax}
+This will test if the given \tsobj[marg]{pack-name} was set with \tsobj{\PkgInfoSet} and \tsobj[marg,sep=or]{if-true,if-false} will be properly executed.
+\end{codedescribe}
+
+
+\begin{codedescribe}[code,new=2025/11/01]{\PkgInfoMapOver}
+\begin{codesyntax}%
+\tsmacro{\PkgInfoMapOver}{inline-code}
+\end{codesyntax}
+\tsobj[marg]{inline-code} will receive (as \tsobj[arg]{\#1}) the name of each package set with \tsobj{\PkgInfoSet} in the order they were set.
+\end{codedescribe}
+
+
+\begin{codestore}[demoE]
+\PkgInfoMapOver
+  {
+   \PkgInfoDescription{#1}
+  }
+\end{codestore}
+
+\tsdemo[pkginfograb]{demoE}
+
 
 
 

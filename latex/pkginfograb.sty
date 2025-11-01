@@ -12,7 +12,7 @@
 %%
 %% The Current Maintainer of this work is Alceu Frigeri
 %%
-%% This is version {1.0} {2025/10/21}
+%% This is version {1.1} {2025/11/01}
 %%
 %% The list of files that compose this work can be found in the README.md file at
 %% https://ctan.org/pkg/pkginfograb
@@ -22,38 +22,37 @@
 
 \ProvidesExplPackage
     {pkginfograb}
-    {2025/10/21}
-    {1.0}
+    {2025/11/01}
+    {1.1}
     {Collecting~ package's~ info~ in~ a~ regular~ way}
 
-%%%%%%%
-%%%
-%%% Just an attempt of having packages info in a regular way
-%%% \pkginfograb_set:nn {<pkg-name>} { props} for each and all.
-%%%
-%%%%%%%
+
+\seq_new:N \l__pkginfograb_sets_seq
 \cs_new_protected:Npn \pkginfograb_set:nn #1#2
   {
     \prop_new_linked:c {l__pkginfograb_ #1 _prop}
     \prop_set_from_keyval:cn {l__pkginfograb_ #1 _prop}
       { #2 }
+    \seq_put_right:Nn \l__pkginfograb_sets_seq {#1}
   }
 
-%%%%%%%%% 
+%%%%%%%
 %%%
-%%% self info
+%%% Just an attempt of having package's info in a regular way
+%%% \pkginfograb_set:nn {<pkg-name>} { props} for each and all.
 %%%
-%%%%%%%%%
+%%%%%%%
 \pkginfograb_set:nn {pkginfograb}
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/10/21},
-    version      = {1.0} ,
+    date         = {2025/11/01},
+    version      = {1.1} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
-%%%%%%%%% 
-%%%%%%%%%
+%%%%%%%
+%%% End of cut-n-paste
+%%%%%%%
 
 \cs_new_protected:Npn \pkginfograb_get:nn #1#2
   {
@@ -88,6 +87,22 @@
       }
   } 
 
+%%%%%%%%%%
+%%%%%%%%%% Just to be complete
+%%%%%%%%%%
+
+\cs_new_protected:Npn \pkginfograb_if_set_p:n #1
+  { \prop_if_exist_p:c { l__pkginfograb_ #1 _prop } }
+
+\cs_new_protected:Npn \pkginfograb_if_set:nTF #1
+  { \prop_if_exist:cTF { l__pkginfograb_ #1 _prop } }
+\cs_new_protected:Npn \pkginfograb_if_set:nT #1
+  { \prop_if_exist:cT { l__pkginfograb_ #1 _prop } }
+\cs_new_protected:Npn \pkginfograb_if_set:nF #1
+  { \prop_if_exist:cF { l__pkginfograb_ #1 _prop } }
+
+\cs_new_protected:Npn \pkginfograb_map_inline:n
+  { \seq_map_inline:Nn \l__pkginfograb_sets_seq }
 
 %%%%%%%%%%
 %%%%%%%%%% ARGH... below follows version testing...
@@ -287,11 +302,13 @@
 \cs_new_protected:Npn \pkginfograb_set_aliases:
   {
     \cs_set_eq:NN \PkgInfoSet         \pkginfograb_set:nn
+    \cs_set_eq:NN \PkgInfoIfSet       \pkginfograb_if_set:nTF
     \cs_set_eq:NN \PkgInfo            \pkginfograb_get:nn
     \cs_set_eq:NN \PkgInfoGet         \pkginfograb_get:nnN
     \cs_set_eq:NN \PkgInfoDescription \pkginfograb_description:n
     \cs_set_eq:NN \PkgInfoReqVersion  \pkginfograb_req_version:nnn
     \cs_set_eq:NN \PkgInfoReqDate     \pkginfograb_req_date:nnn
+    \cs_set_eq:NN \PkgInfoMapOver     \pkginfograb_map_inline:n
   }
   
 \cs_new_eq:NN \PkgInfoSetAliases \pkginfograb_set_aliases:
