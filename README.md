@@ -66,8 +66,7 @@ The Current Maintainer of this work is Alceu Frigeri
 ## Change log
 * Version 1.2 (this)
     - a bit of expansion control
-    - new command to set package's info and call \ProvidesExplPackage with it.
-
+    - new commands to set package's info and call \ProvidesExplPackage or \ProvidesExplClass (for simetry) after them
 
 * Version 1.1
     - collecting the list of packages settled and a command to map over them.

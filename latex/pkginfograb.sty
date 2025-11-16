@@ -60,11 +60,17 @@
 \cs_new:Npn \pkginfograbProvidesExplPackage #1#2
   {
     \pkginfograb_set:nn {#1}{#2}
-    \__pkginfograb_provides_expl:c { l__pkginfograb_ #1 _prop }
+    \__pkginfograb_provides_expl:cN { l__pkginfograb_ #1 _prop } \ProvidesExplPackage
+  }
+
+\cs_new:Npn \pkginfograbProvidesExplClass #1#2
+  {
+    \pkginfograb_set:nn {#1}{#2}
+    \__pkginfograb_provides_expl:cN { l__pkginfograb_ #1 _prop } \ProvidesExplClass
   }
 
 \seq_const_from_clist:Nn \c__pkginfograb_info_list_seq {name,date,version,description}
-\cs_new:Npn \__pkginfograb_provides_expl:N #1
+\cs_new:Npn \__pkginfograb_provides_expl:NN #1#2
   {
     \tl_clear:N \l__pkginfograb_tmpa_tl
     \seq_map_inline:Nn \c__pkginfograb_info_list_seq
@@ -77,9 +83,9 @@
             \tl_put_right:Nn \l__pkginfograb_tmpa_tl { { } }
           }
       }
-    \exp_last_unbraced:NV \ProvidesExplPackage \l__pkginfograb_tmpa_tl
+    \exp_last_unbraced:NV #2 \l__pkginfograb_tmpa_tl
   }
-\cs_generate_variant:Nn   \__pkginfograb_provides_expl:N {c}
+\cs_generate_variant:Nn   \__pkginfograb_provides_expl:NN {c}
 
 \cs_new_protected:Npn \pkginfograb_get:nn #1#2
   {

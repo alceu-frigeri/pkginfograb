@@ -99,11 +99,12 @@ This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj
 \tscode*[pkginfograb]{demoA}
 
 
-\begin{codedescribe}{\pkginfograbProvidesExplPackage}
+\begin{codedescribe}{\pkginfograbProvidesExplPackage,\pkginfograbProvidesExplClass}
 \begin{codesyntax}%
 \tsmacro{\pkginfograbProvidesExplPackage}{pack-name,keyval-list}
+\tsmacro{\pkginfograbProvidesExplClass}{pack-name,keyval-list}
 \end{codesyntax}
-Same as \tsobj{\pkginfograb_set:nn}, but calling \tsobj{\ProvidesExplPackage} right after, with the information just set. It assumes the following properties to be present: \tsobj[key]{name,date,version,description}. This is meant to de-duplicate information (and reduce the chances of inconsistencies). This doesn't follow \tsobj[pkg]{expl3} convention, since \tsobj[pkg]{expl3} code régime will starts only after \tsobj{\ProvidesExplPackage}.
+Same as \tsobj{\pkginfograb_set:nn}, but calling \tsobj[code,sep=or]{\ProvidesExplPackage,\ProvidesExplClass} right after, with the information just set. It assumes the following properties to be present: \tsobj[key]{name,date,version,description}. This is meant to de-duplicate information (and reduce the chances of inconsistencies). This doesn't follow \tsobj[pkg]{expl3} convention, since \tsobj[pkg]{expl3} code régime will starts only after \tsobj[code,sep=or]{\ProvidesExplPackage,\ProvidesExplClass}.
 \end{codedescribe}
 
  For Example:
@@ -121,7 +122,7 @@ Same as \tsobj{\pkginfograb_set:nn}, but calling \tsobj{\ProvidesExplPackage} ri
 \tscode*[pkginfograb]{demoA}[2]
 This will be equivalent to call \tsverb[code]{\ProvidesExplPackage {newpackage} {2025/11/16} {1.0a} {some~ lazy~ pack} } after \tsobj{\pkginfograb_set:nn}. 
 \begin{tsremark}
-  \tsobj[pkg]{expl3} code régime will be en force after it.
+  \tsobj[pkg]{expl3} code régime will be en force after them.
 \end{tsremark}
 \begin{codedescribe}{\pkginfograb_req_version:nnn}
 \begin{codesyntax}%
