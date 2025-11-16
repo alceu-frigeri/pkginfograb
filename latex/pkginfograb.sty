@@ -12,7 +12,7 @@
 %%
 %% The Current Maintainer of this work is Alceu Frigeri
 %%
-%% This is version {1.1} {2025/11/01}
+%% This is version {1.2} {2025/11/16}
 %%
 %% The list of files that compose this work can be found in the README.md file at
 %% https://ctan.org/pkg/pkginfograb
@@ -22,37 +22,64 @@
 
 \ProvidesExplPackage
     {pkginfograb}
-    {2025/11/01}
-    {1.1}
+    {2025/11/16}
+    {1.2}
     {Collecting~ package's~ info~ in~ a~ regular~ way}
 
-
 \seq_new:N \l__pkginfograb_sets_seq
-\cs_new_protected:Npn \pkginfograb_set:nn #1#2
+\cs_new_protected:Npn \pkginfograb_set:nn #1
   {
-    \prop_new_linked:c {l__pkginfograb_ #1 _prop}
-    \prop_set_from_keyval:cn {l__pkginfograb_ #1 _prop}
-      { #2 }
     \seq_put_right:Nn \l__pkginfograb_sets_seq {#1}
+    \prop_new_linked:c {l__pkginfograb_#1_prop}
+    \prop_set_from_keyval:cn {l__pkginfograb_#1_prop}
   }
 
 %%%%%%%
 %%%
-%%% Just an attempt of having package's info in a regular way
-%%% \pkginfograb_set:nn {<pkg-name>} { props} for each and all.
+%%% Just an attempt at having package's info in a regular way
+%%%   \pkginfograb_set:nn {<pkg-name>} { props} sets package info
+%%%
+%%%   \pkginfograbProvidesExplPackage {<pkg-name>} { props} sets package info
+%%%     and calls \ProvidesExplPackage
 %%%
 %%%%%%%
+%\RequirePackage{pkginfograb}
+%\pkginfograbProvidesExplPackage
 \pkginfograb_set:nn {pkginfograb}
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/11/01},
-    version      = {1.1} ,
+    date         = {2025/11/16},
+    version      = {1.2} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 %%%%%%%
 %%% End of cut-n-paste
 %%%%%%%
+
+\cs_new:Npn \pkginfograbProvidesExplPackage #1#2
+  {
+    \pkginfograb_set:nn {#1}{#2}
+    \__pkginfograb_provides_expl:c { l__pkginfograb_ #1 _prop }
+  }
+
+\seq_const_from_clist:Nn \c__pkginfograb_info_list_seq {name,date,version,description}
+\cs_new:Npn \__pkginfograb_provides_expl:N #1
+  {
+    \tl_clear:N \l__pkginfograb_tmpa_tl
+    \seq_map_inline:Nn \c__pkginfograb_info_list_seq
+      {
+        \prop_get:NnNTF #1 { ##1 } \l__pkginfograb_tmpb_tl
+          { 
+            \tl_put_right:Ne \l__pkginfograb_tmpa_tl { {\l__pkginfograb_tmpb_tl} }
+          }
+          { 
+            \tl_put_right:Nn \l__pkginfograb_tmpa_tl { { } }
+          }
+      }
+    \exp_last_unbraced:NV \ProvidesExplPackage \l__pkginfograb_tmpa_tl
+  }
+\cs_generate_variant:Nn   \__pkginfograb_provides_expl:N {c}
 
 \cs_new_protected:Npn \pkginfograb_get:nn #1#2
   {
@@ -134,7 +161,7 @@
   }
 
 
-\tl_new:N \l__pkginfograb_tmpa_tl
+%\tl_new:N \l__pkginfograb_tmpa_tl
 \tl_new:N \l__pkginfograb_tmpb_tl
 \tl_new:N \l__pkginfograb_tmpc_tl
 \tl_new:N \l__pkginfograb_tmpd_tl
@@ -312,3 +339,5 @@
   }
   
 \cs_new_eq:NN \PkgInfoSetAliases \pkginfograb_set_aliases:
+
+

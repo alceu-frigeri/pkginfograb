@@ -64,7 +64,12 @@ The Current Maintainer of this work is Alceu Frigeri
 -------------
 
 ## Change log
-* Version 1.1 (this)
+* Version 1.2 (this)
+    - a bit of expansion control
+    - new command to set package's info and call \ProvidesExplPackage with it.
+
+
+* Version 1.1
     - collecting the list of packages settled and a command to map over them.
     - adding conditional commands for testing if (package's) info set.
 

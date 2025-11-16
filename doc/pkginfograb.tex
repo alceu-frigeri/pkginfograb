@@ -20,7 +20,7 @@
 %%
 %% The Current Maintainer of this work is Alceu Frigeri
 %%
-%% This is version {1.1} {2025/11/01}
+%% This is version {1.2} {2025/11/16}
 %%
 %% The list of files that compose this work can be found in the README.md file at
 %% https://ctan.org/pkg/pkginfograb
@@ -53,7 +53,7 @@
 
 \begin{typesetabstract}
 
-This package is aimed at package writers and offers a way to collect/document \LaTeX\ package's info (name, version, description, etc.) in a systemized way, including a mechanism to check package's version. Just a few functions are defined, to document/set package's info, retrieve them and to verify package's version (for instance, to verify if a loaded package is newer than a given reference).
+This package is aimed at package writers and offers a way to collect/document \LaTeX\ package's info (name, version, description, etc.) in a systematic way, including a mechanism to check package's version. Just a few functions are defined, to document/set package's info, retrieve them and to verify package's version (if it is newer than a given reference).
 
 \end{typesetabstract}
 
@@ -62,10 +62,11 @@ This package is aimed at package writers and offers a way to collect/document \L
 \setnewcodekey{pkginfograb}{codeprefix={},resultprefix={},letter={@,_},
   keywd2={
     pkginfograb_set,pkginfograb_get,pkginfograb_req_version,pkginfograb_req_date,
-    pkginfograb_description,
+    pkginfograb_description, pkginfograbProvidesExplPackage, 
     PkgInfoSet,PkgInfo,PkgInfoDescription,PkgInfoReqVersion,PkgInfoReqDate
     },
-  emph2={name,prefix,version,date,description}
+  emph2={name,prefix,version,date,description},
+  keywd={ExplSyntaxOn}
   }
 
 
@@ -77,7 +78,7 @@ This package is aimed at package writers and offers a way to collect/document \L
 \begin{codesyntax}%
 \tsmacro{\pkginfograb_set:nn}{pack-name,keyval-list}
 \end{codesyntax}
-This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj[marg]{keyval-list} might contain any set of keys, though, the functions below expect at least \tsobj[meta,sep=or]{version,date} (for version checking) and \tsobj[meta]{name,version,date,description} (for \tsobj{\pkginfograb_description:n}).
+This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj[marg]{keyval-list} might contain any set of keys, though, the functions below expect at least \tsobj[meta,sep=or]{version,date} (for version checking) and \tsobj[meta]{name,date,version,description} (for \tsobj{\pkginfograb_description:n}).
 \end{codedescribe}
 \begin{tsremark}
   An error will be raised if calling it twice for the same \tsobj[marg]{pack-name}.
@@ -89,8 +90,8 @@ This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/11/01},
-    version      = {1.1} ,
+    date         = {2025/11/16},
+    version      = {1.2} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 \end{codestore}
@@ -98,6 +99,30 @@ This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj
 \tscode*[pkginfograb]{demoA}
 
 
+\begin{codedescribe}{\pkginfograbProvidesExplPackage}
+\begin{codesyntax}%
+\tsmacro{\pkginfograbProvidesExplPackage}{pack-name,keyval-list}
+\end{codesyntax}
+Same as \tsobj{\pkginfograb_set:nn}, but calling \tsobj{\ProvidesExplPackage} right after, with the information just set. It assumes the following properties to be present: \tsobj[key]{name,date,version,description}. This is meant to de-duplicate information (and reduce the chances of inconsistencies). This doesn't follow \tsobj[pkg]{expl3} convention, since \tsobj[pkg]{expl3} code régime will starts only after \tsobj{\ProvidesExplPackage}.
+\end{codedescribe}
+
+ For Example:
+\begin{codestore}[demoA]
+\pkginfograbProvidesExplPackage {newpackage}
+  { 
+    name         = {newpackage} ,
+    prefix       = {newpack} ,
+    date         = {2025/11/16},
+    version      = {1.0a} ,
+    description  = {some~ lazy~ pack}
+  }
+\end{codestore}
+
+\tscode*[pkginfograb]{demoA}[2]
+This will be equivalent to call \tsverb[code]{\ProvidesExplPackage {newpackage} {2025/11/16} {1.0a} {some~ lazy~ pack} } after \tsobj{\pkginfograb_set:nn}. 
+\begin{tsremark}
+  \tsobj[pkg]{expl3} code régime will be en force after it.
+\end{tsremark}
 \begin{codedescribe}{\pkginfograb_req_version:nnn}
 \begin{codesyntax}%
 \tsmacro{\pkginfograb_req_version:nnn}{your-pack,pack-name,min-version}
@@ -208,8 +233,8 @@ For Example:
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/11/01},
-    version      = {1.1} ,
+    date         = {2025/11/16},
+    version      = {1.2} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 \end{codestore}
@@ -298,8 +323,6 @@ This will test if the given \tsobj[marg]{pack-name} was set with \tsobj{\PkgInfo
 \end{codestore}
 
 \tsdemo[pkginfograb]{demoE}
-
-
 
 
 %% if needed
