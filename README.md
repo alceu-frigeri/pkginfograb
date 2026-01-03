@@ -30,8 +30,6 @@ For bug reports and enhancement suggestions, the preferred way is to use
 [the project's issue page](https://github.com/alceu-frigeri/pkginfograb/issues).
 Please be ready to provide an example code showing the bug, if any.
 
-Please do not use the issue page for generic help on how to use the package.
-
 * git: https://github.com/alceu-frigeri/pkginfograb
 
 -------------
@@ -64,7 +62,11 @@ The Current Maintainer of this work is Alceu Frigeri
 -------------
 
 ## Change log
-* Version 1.2 (this)
+
+* Version 1.2a (this)
+    - added new command to set package's info and call \ProvidesExplFile
+
+* Version 1.2 
     - a bit of expansion control
     - new commands to set package's info and call \ProvidesExplPackage or \ProvidesExplClass
 

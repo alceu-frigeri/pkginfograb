@@ -20,7 +20,7 @@
 %%
 %% The Current Maintainer of this work is Alceu Frigeri
 %%
-%% This is version {1.2} {2025/11/16}
+%% This is version {1.2a} {2026/01/03}
 %%
 %% The list of files that compose this work can be found in the README.md file at
 %% https://ctan.org/pkg/pkginfograb
@@ -31,11 +31,12 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
-\usepackage[infograb]{codedescribe}
+\usepackage[infograb,silence]{codedescribe}
 \RequirePackage[inline]{enumitem}
 \SetEnumitemKey{miditemsep}{parsep=0ex,itemsep=0.4ex}
 
-\usepackage{pkginfograb}
+
+\RequirePackage{pkginfograb}
 
 %% if needed
 %\RequirePackage[backend=biber]{biblatex}
@@ -59,13 +60,13 @@ This package is aimed at package writers and offers a way to collect/document \L
 
 %\tableofcontents
 
-\setnewcodekey{pkginfograb}{codeprefix={},resultprefix={},letter={@,_},
-  keywd2={
+\newcodekey{pkginfograb}{codeprefix={},resultprefix={},letter={@,_},
+  keywd=[2]{
     pkginfograb_set,pkginfograb_get,pkginfograb_req_version,pkginfograb_req_date,
     pkginfograb_description, pkginfograbProvidesExplPackage, 
     PkgInfoSet,PkgInfo,PkgInfoDescription,PkgInfoReqVersion,PkgInfoReqDate
     },
-  emph2={name,prefix,version,date,description},
+  emph=[2]{name,prefix,version,date,description},
   keywd={ExplSyntaxOn}
   }
 
@@ -90,8 +91,8 @@ This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/11/16},
-    version      = {1.2} ,
+    date         = {2026/01/03},
+    version      = {1.2a} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 \end{codestore}
@@ -99,28 +100,30 @@ This will create a property list associated with \tsobj[marg]{pack-name}. \tsobj
 \tscode*[pkginfograb]{demoA}
 
 
-\begin{codedescribe}{\pkginfograbProvidesExplPackage,\pkginfograbProvidesExplClass}
+\begin{codedescribe}[code,update=2026/01/03]{\pkginfograbProvidesExplPackage,\pkginfograbProvidesExplClass,\pkginfograbProvidesExplFile}
 \begin{codesyntax}%
 \tsmacro{\pkginfograbProvidesExplPackage}{pack-name,keyval-list}
 \tsmacro{\pkginfograbProvidesExplClass}{pack-name,keyval-list}
+\tsmacro{\pkginfograbProvidesExplFile}{pack-name,keyval-list}
 \end{codesyntax}
-Same as \tsobj{\pkginfograb_set:nn}, but calling \tsobj[code,sep=or]{\ProvidesExplPackage,\ProvidesExplClass} right after, with the information just set. It assumes the following properties to be present: \tsobj[key]{name,date,version,description}. This is meant to de-duplicate information (and reduce the chances of inconsistencies). This doesn't follow \tsobj[pkg]{expl3} convention, since \tsobj[pkg]{expl3} code régime will starts only after \tsobj[code,sep=or]{\ProvidesExplPackage,\ProvidesExplClass}.
+Same as \tsobj{\pkginfograb_set:nn}, but calling the  commands \tsobj[code,sep=or]{\ProvidesExplPackage,\ProvidesExplClass,\ProvidesExplFile} 
+right after, with the information just set. It assumes the following properties to be present: \tsobj[key]{name,date,version,description}.  This doesn't follow \tsobj[pkg]{expl3} convention, since \tsobj[pkg]{expl3} code régime will starts only after the commands \tsobj[code,sep=or]{\ProvidesExpl...} are called. For Example:
 \end{codedescribe}
 
- For Example:
+ 
 \begin{codestore}[demoA]
 \pkginfograbProvidesExplPackage {newpackage}
   { 
     name         = {newpackage} ,
     prefix       = {newpack} ,
-    date         = {2025/11/16},
+    date         = {2026/01/03},
     version      = {1.0a} ,
     description  = {some~ lazy~ pack}
   }
 \end{codestore}
 
 \tscode*[pkginfograb]{demoA}[2]
-This will be equivalent to call \tsverb[code]{\ProvidesExplPackage {newpackage} {2025/11/16} {1.0a} {some~ lazy~ pack} } after \tsobj{\pkginfograb_set:nn}. 
+This will be equivalent to call \tsverb[code]{\ProvidesExplPackage {newpackage} {2026/01/03} {1.0a} {some~ lazy~ pack} } after \tsobj{\pkginfograb_set:nn}. 
 \begin{tsremark}
   \tsobj[pkg]{expl3} code régime will be en force after them.
 \end{tsremark}
@@ -149,7 +152,7 @@ This will verify if \tsobj[marg]{pack-name}'s \tsobj[marg]{date} (as stored with
 \begin{codesyntax}%
 \tsmacro{\pkginfograb_set_aliases:}{}
 \end{codesyntax}
-This will set \LaTeXe\  aliases for the \tsobj[pkg]{expl3} in this package. Note that none of the commands in \ref{2e-cmds} are defined by default, except \tsobj{\PkgInfoSetAliases} which is an alias for this command.
+This will set \LaTeXe\  aliases for the \tsobj[pkg]{expl3} commands in this package. Note that none of the commands in \ref{2e-cmds} are defined by default, except \tsobj{\PkgInfoSetAliases} which is an alias for this command.
 \end{codedescribe}
 
 
@@ -234,8 +237,8 @@ For Example:
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/11/16},
-    version      = {1.2} ,
+    date         = {2026/01/03},
+    version      = {1.2a} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 \end{codestore}

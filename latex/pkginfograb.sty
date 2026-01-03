@@ -12,7 +12,7 @@
 %%
 %% The Current Maintainer of this work is Alceu Frigeri
 %%
-%% This is version {1.2} {2025/11/16}
+%% This is version {1.2a} {2026/01/03}
 %%
 %% The list of files that compose this work can be found in the README.md file at
 %% https://ctan.org/pkg/pkginfograb
@@ -22,8 +22,8 @@
 
 \ProvidesExplPackage
     {pkginfograb}
-    {2025/11/16}
-    {1.2}
+    {2026/01/03}
+    {1.2a}
     {Collecting~ package's~ info~ in~ a~ regular~ way}
 
 \seq_new:N \l__pkginfograb_sets_seq
@@ -49,8 +49,8 @@
   { 
     name         = {pkginfograb} ,
     prefix       = {pkginfograb} ,
-    date         = {2025/11/16},
-    version      = {1.2} ,
+    date         = {2026/01/03},
+    version      = {1.2a} ,
     description  = {Collecting~ package's~ info~ in~ a~ regular~ way}
   }
 %%%%%%%
@@ -68,6 +68,13 @@
     \pkginfograb_set:nn {#1}{#2}
     \__pkginfograb_provides_expl:cN { l__pkginfograb_ #1 _prop } \ProvidesExplClass
   }
+
+\cs_new:Npn \pkginfograbProvidesExplFile #1#2
+  {
+    \pkginfograb_set:nn {#1}{#2}
+    \__pkginfograb_provides_expl:cN { l__pkginfograb_ #1 _prop } \ProvidesExplFile
+  }
+
 
 \seq_const_from_clist:Nn \c__pkginfograb_info_list_seq {name,date,version,description}
 \cs_new:Npn \__pkginfograb_provides_expl:NN #1#2
@@ -332,7 +339,7 @@
 
 
 %% just in case one wishes to use this in a LaTeX2e context.  
-\cs_new_protected:Npn \pkginfograb_set_aliases:
+\cs_new:Npn \pkginfograb_set_aliases:
   {
     \cs_set_eq:NN \PkgInfoSet         \pkginfograb_set:nn
     \cs_set_eq:NN \PkgInfoIfSet       \pkginfograb_if_set:nTF
